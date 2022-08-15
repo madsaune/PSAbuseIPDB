@@ -1,14 +1,14 @@
-function Invoke-AIPDBRequest {
+function Invoke-AbuseIPDBRequest {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]
         [string]
-        $Endpoint,
+        $Path,
 
         [Parameter()]
-        [ValidateSet("GET", "POST", "DELETE", "PUT", "PATCH")]
+        [ValidateSet("get", "post", "delete", "put", "patch")]
         [string]
-        $Method = "GET",
+        $Method = "get",
 
         [Parameter()]
         [hashtable]
@@ -24,42 +24,46 @@ function Invoke-AIPDBRequest {
     )
 
     begin {
-        $url = "{0}{1}" -f ($script:baseURL, $Endpoint)
-        $Headers.Add("Key", $script:apiKey)
-        $Headers.Add("Accept", "application/json")
+        $requestParams = @{
+            Uri     = "{0}{1}" -f ($script:baseURL, $Path)
+            Headers = @{
+                Key    = $script:apiKey
+                Accept = "application/json"
+            }
+        }
+
+        if ($PSBoundParameters.ContainsKey('Headers')) {
+            foreach ($item in $Headers.GetEnumerator()) {
+                $requestParams.Headers.Add($item.Key, $item.Value)
+            }
+        }
+
+
+        if ($PSBoundParameters.ContainsKey('QueryParams')) {
+            $query = @()
+            foreach ($item in $QueryParams.GetEnumerator()) {
+                $query += "{0}={1}" -f ($item.Key, [System.Web.HttpUtility]::UrlEncode($item.Value))
+            }
+
+            $requestParams.Uri += "?{0}" -f ($query -Join "&")
+        }
+
+        if ($PSBoundParameters.ContainsKey('Body')) {
+            $query = @()
+            foreach ($item in $Body.GetEnumerator()) {
+                $query += "{0}={1}" -f ($item.Key, [System.Web.HttpUtility]::UrlEncode($item.Value))
+            }
+
+            $encodedBody = $query -join "&"
+            $requestParams.Add("ContentType", "application/x-www-form-urlencoded")
+            $requestParams.Add("Body", $encodedBody)
+        }
     }
 
     process {
-        $params = @{
-            Uri     = $url
-            Method  = $Method
-            Headers = $Headers
-        }
-
-        if ($QueryParams.Count -gt 0) {
-            $query = @()
-            foreach ($item in $QueryParams.GetEnumerator()) {
-                $query += "{0}={1}" -f ($item.Key, [System.Web.HttpUtility]::UrlEncode($item.Value))
-            }
-
-            $params.Uri += "?{0}" -f ($query -Join "&")
-        }
-
-        if ($Body.Count -gt 0) {
-            $query = @()
-            foreach ($item in $QueryParams.GetEnumerator()) {
-                $query += "{0}={1}" -f ($item.Key, [System.Web.HttpUtility]::UrlEncode($item.Value))
-            }
-
-            $body = $query -join "&"
-            $params.ContentType = "application/x-www-form-urlencoded"
-            $params.Body = $body
-        }
-
         try {
-            Write-Verbose "$($Method) $($params.Uri)"
-            $result = Invoke-RestMethod @params
-            return $result.data
+            Write-Verbose "$($requestParams.Method): $($requestParams.Uri)"
+            Invoke-RestMethod @requestParams
         } catch {
             $StatusCode = $_.Exception.Response.StatusCode
             $ErrorMessage = $_.ErrorDetails.Message
