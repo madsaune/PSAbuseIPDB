@@ -82,7 +82,7 @@ function Submit-AbuseIPDBReport {
             $body.Add("comment", $Comment)
         }
 
-        $result = Invoke-AIPDBRequest -Endpoint "/report" -Body $body -ErrorAction Stop
+        $result = Invoke-AbuseIPDBRequest -Path "/report" -Body $body -ErrorAction Stop
         return $result
     }
 
