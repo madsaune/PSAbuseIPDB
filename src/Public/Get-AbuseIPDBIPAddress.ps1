@@ -50,7 +50,7 @@ function Get-AbuseIPDBIPAddress {
             $queryParams.Add("verbose", "true")
         }
 
-        $result = Invoke-AIPDBRequest -Endpoint "/check" -QueryParams $queryParams -ErrorAction Stop
+        $result = Invoke-AbuseIPDBRequest -Path "/check" -QueryParams $queryParams -ErrorAction Stop
 
         return $result
     }

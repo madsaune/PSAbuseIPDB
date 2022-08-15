@@ -82,7 +82,7 @@ function Get-AbuseIPDBBlacklist {
     }
 
     process {
-        $result = Invoke-AIPDBRequest -Endpoint "/blacklist" -QueryParams $queryParams -ErrorAction Stop
+        $result = Invoke-AbuseIPDBRequest -Path "/blacklist" -QueryParams $queryParams -ErrorAction Stop
         return $result
     }
 
