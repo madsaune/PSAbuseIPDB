@@ -1,4 +1,4 @@
-function Initialize-AIPDB {
+function Initialize-AbuseIPDB {
     [CmdletBinding()]
     param (
         [Parameter()]
