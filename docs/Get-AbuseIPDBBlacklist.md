@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: PSAbuseIPDB-help.xml
 Module Name: PSAbuseIPDB
 online version:
@@ -48,22 +48,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ExceptCountries
-A comma seperated list of ISO 3166 alpha-2 codes.
-Retrieves all IPs except those that originate in the given country or countries.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Limit
 The number of IP addresses included in the list is capped to a hard limit, depending on your subscription.
 
@@ -85,6 +69,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PlainText
+If you prefer a simple newline-separated plaintext response.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -OnlyCountries
 A comma seperated list of ISO 3166 alpha-2 codes.
 Retrieves IPs that only originate in the given country or countries.
@@ -101,17 +100,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PlainText
-If you prefer a simple newline-separated plaintext response.
+### -ExceptCountries
+A comma seperated list of ISO 3166 alpha-2 codes.
+Retrieves all IPs except those that originate in the given country or countries.
 
 ```yaml
-Type: SwitchParameter
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 4
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
