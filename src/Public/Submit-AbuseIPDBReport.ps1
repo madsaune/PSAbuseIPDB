@@ -1,4 +1,4 @@
-function Submit-AIPDBReport {
+function Submit-AbuseIPDBReport {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]

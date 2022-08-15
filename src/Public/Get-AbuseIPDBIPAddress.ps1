@@ -21,7 +21,7 @@ The reports array is limited to 10,000 elements. Only reports within the timefra
 Official documentation: https://docs.abuseipdb.com/#check-endpoint
 
 #>
-function Get-AIPDBIPAddress {
+function Get-AbuseIPDBIPAddress {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]

@@ -32,7 +32,7 @@ A comma seperated list of ISO 3166 alpha-2 codes. Retrieves all IPs except those
 Official documentation: https://docs.abuseipdb.com/#blacklist-endpoint
 
 #>
-function Get-AIPDBBlacklist {
+function Get-AbuseIPDBBlacklist {
     [CmdletBinding()]
     param (
         [Parameter()]
