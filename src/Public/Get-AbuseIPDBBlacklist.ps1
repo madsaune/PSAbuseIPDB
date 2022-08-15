@@ -38,11 +38,12 @@ function Get-AbuseIPDBBlacklist {
         [Parameter()]
         [ValidateRange(25, 100)]
         [int]
-        $ConfidenceMinimum,
+        $ConfidenceMinimum = 100,
 
         [Parameter()]
+        [ValidateRange(1, 10000)]
         [int]
-        $Limit,
+        $Limit = 10000,
 
         [Parameter()]
         [switch]
